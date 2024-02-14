@@ -145,7 +145,7 @@
         app:layout_constraintTop_toTopOf="@+id/activity_record_lte_rsrq_text_ui"/>
 
     <TextView
-        android:id="@+id/activity_record_lte_pci_text_ui"
+        android:id="@+id/activity_record_lte_sinr_text_ui"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -154,23 +154,23 @@
         android:gravity="right"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/activity_record_text_value_color"
-        app:layout_constraintEnd_toStartOf="@+id/activity_record_lte_pci_label_ui"
+        app:layout_constraintEnd_toStartOf="@+id/activity_record_lte_sinr_label_ui"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activity_record_lte_rsrq_text_ui"/>
 
     <TextView
-        android:id="@+id/activity_record_lte_pci_label_ui"
+        android:id="@+id/activity_record_lte_sinr_label_ui"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:text="@string/activity_record_lte_pci_label_text"
+        android:text="@string/activity_record_lte_sinr_label_text"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBottom_toBottomOf="@+id/activity_record_lte_pci_text_ui"
+        app:layout_constraintBottom_toBottomOf="@+id/activity_record_lte_sinr_text_ui"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/activity_record_lte_pci_text_ui"
-        app:layout_constraintTop_toTopOf="@+id/activity_record_lte_pci_text_ui"/>
+        app:layout_constraintStart_toEndOf="@+id/activity_record_lte_sinr_text_ui"
+        app:layout_constraintTop_toTopOf="@+id/activity_record_lte_sinr_text_ui"/>
 
     <TextView
         android:id="@+id/activity_record_data_points_text_ui"
@@ -185,7 +185,7 @@
         app:layout_constraintEnd_toStartOf="@+id/activity_record_data_points_label_ui"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_record_lte_pci_text_ui"/>
+        app:layout_constraintTop_toBottomOf="@+id/activity_record_lte_sinr_text_ui"/>
 
     <TextView
         android:id="@+id/activity_record_data_points_label_ui"
@@ -201,7 +201,7 @@
         app:layout_constraintTop_toTopOf="@+id/activity_record_data_points_text_ui"/>
 
     <TextView
-        android:id="@+id/activity_record_offset_text_ui"
+        android:id="@+id/activity_record_lte_rssi_text_ui"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -210,37 +210,22 @@
         android:gravity="right"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/activity_record_text_value_color"
-        app:layout_constraintEnd_toStartOf="@+id/activity_record_offset_label_ui"
+        app:layout_constraintEnd_toStartOf="@+id/activity_record_lte_rssi_label_ui"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activity_record_data_points_text_ui"/>
 
     <TextView
-        android:id="@+id/activity_record_offset_label_ui"
+        android:id="@+id/activity_record_lte_rssi_label_ui"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:text="@string/activity_record_offset_label_text"
+        android:text="@string/activity_record_lte_rssi_label_text"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBottom_toBottomOf="@+id/activity_record_offset_text_ui"
+        app:layout_constraintBottom_toBottomOf="@+id/activity_record_lte_rssi_text_ui"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/activity_record_offset_text_ui"
-        app:layout_constraintTop_toTopOf="@+id/activity_record_offset_text_ui"/>
-
-    <Button
-        android:id="@+id/button2"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:onClick="uncertaintyStatementButtonClicked"
-        android:text="@string/activity_record_uncertainty_statement_text"
-        android:textColor="@color/activity_record_clickable_color"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_record_offset_label_ui"/>
+        app:layout_constraintStart_toEndOf="@+id/activity_record_lte_rssi_text_ui"
+        app:layout_constraintTop_toTopOf="@+id/activity_record_lte_rssi_text_ui"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -33,83 +33,37 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:onClick="acceptButtonClicked"
-        android:text="@string/activity_disclaimer_accept_button_text"
+        android:text="Next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/activity_disclaimer_exit_button_ui"/>
 
-    <Button
-        android:id="@+id/activity_disclaimer_acknowledgement_notice_button_ui"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:onClick="prohibitionNoticeActivityButtonClicked"
-        android:text="@string/activity_disclaimer_acknowledgement_notice_link_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_disclaimer_liability_notice_button_ui"/>
+    <MultiAutoCompleteTextView
+        android:id="@+id/multiAutoCompleteTextView"
+        android:layout_width="389dp"
+        android:layout_height="253dp"
 
-    <Button
-        android:id="@+id/activity_disclaimer_prohibition_notice_button_ui"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:onClick="acknowledgementNoticeActivityButtonClicked"
-        android:text="@string/activity_disclaimer_prohibition_notice_link_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_disclaimer_acknowledgement_notice_button_ui"/>
+        android:text="This App utilises the built-in radio sensors to find the required values, such as
+  RSRP(Reference Signal Received Power),
+RSRQ(Reference Signal Received Quality) ,
+SINR(Signal to Interference plus Noise Ratio),
+RSSI(Received Signal Strength Indicator)"
+        android:textSize="17sp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="13dp"
+        tools:layout_editor_absoluteY="187dp" />
 
-    <Button
-        android:id="@+id/activity_disclaimer_nist_software_button_ui"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:onClick="nistSoftwareActivityButtonClicked"
-        android:text="@string/activity_disclaimer_nist_licensing_statement_link_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_disclaimer_prohibition_notice_button_ui"/>
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="215dp"
+        android:layout_height="48dp"
+        android:text="Application Overview"
+        android:textSize="20sp"
+        android:textStyle="bold"
 
-    <Button
-        android:id="@+id/activity_disclaimer_liability_notice_button_ui"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:onClick="liabilityNoticeActivityButtonClicked"
-        android:text="@string/activity_disclaimer_liability_notice_link_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <Button
-        android:id="@+id/activity_disclaimer_uncertainty_notice_button_ui"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:onClick="uncertaintyNoticeActivityButtonClicked"
-        android:text="@string/activity_disclaimer_uncertainty_statement_link_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_disclaimer_nist_software_button_ui"/>
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="98dp"
+        tools:layout_editor_absoluteY="60dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

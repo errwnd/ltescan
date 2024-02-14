@@ -1,22 +1,8 @@
-/*
- * This software was developed by employees of the National Institute of Standards and Technology (NIST), an agency of the Federal Government
- * and is being made available as a public service. Pursuant to title 17 United States Code Section 105, works of NIST employees are not
- * subject to copyright protection in the United States.  This software may be subject to foreign copyright.  Permission in the United States
- * and in foreign countries, to the extent that NIST may hold copyright, to use, copy, modify, create derivative works, and distribute
- * this software and its documentation without fee is hereby granted on a non-exclusive basis, provided that this notice and disclaimer of
- * warranty appears in all copies.
- *
- * THE SOFTWARE IS PROVIDED 'AS IS' WITHOUT ANY WARRANTY OF ANY KIND, EITHER EXPRESSED, IMPLIED, OR STATUTORY, INCLUDING, BUT NOT LIMITED TO,
- * ANY WARRANTY THAT THE SOFTWARE WILL CONFORM TO SPECIFICATIONS, ANY IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE,
- * AND FREEDOM FROM INFRINGEMENT, AND ANY WARRANTY THAT THE DOCUMENTATION WILL CONFORM TO THE SOFTWARE, OR ANY WARRANTY THAT THE SOFTWARE WILL
- * BE ERROR FREE.  IN NO EVENT SHALL NIST BE LIABLE FOR ANY DAMAGES, INCLUDING, BUT NOT LIMITED TO, DIRECT, INDIRECT, SPECIAL OR CONSEQUENTIAL
- * DAMAGES, ARISING OUT OF, RESULTING FROM, OR IN ANY WAY CONNECTED WITH THIS SOFTWARE, WHETHER OR NOT BASED UPON WARRANTY, CONTRACT, TORT, OR OTHERWISE,
- * WHETHER OR NOT INJURY WAS SUSTAINED BY PERSONS OR PROPERTY OR OTHERWISE, AND WHETHER OR NOT LOSS WAS SUSTAINED FROM, OR AROSE OUT OF THE RESULTS OF,
- * OR USE OF, THE SOFTWARE OR SERVICES PROVIDED HEREUNDER.
- */
+
 package com.lte.ltescan;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -59,7 +45,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class RecordActivity extends AppCompatActivity {
 
     public static final String DATA_READINGS_KEY = "data_readings_key";
-    public static final String OFFSET_KEY = "offset_key";
+   // public static final String OFFSET_KEY = "offset_key";
 
     private static final String TAG = RecordActivity.class.getSimpleName();
     private static final Object MUTEX = new Object();
@@ -69,14 +55,15 @@ public class RecordActivity extends AppCompatActivity {
     private TextView mRecordingImageLabel;
     private AlphaAnimation mRecordingImageAnimation;
     private SignalStrengthListener mSignalStrengthListener;
-    private TextView mRsrpText, mRsrqText, mPciText, mDataPointsText, mOffsetText, mSignalStrengthText;
+    private TextView mRsrpText, mRsrqText, mSinrText,mRssiText, mDataPointsText, mOffsetText, mSignalStrengthText;
     private DataReading mCurrentReading;
-    private double mOffset;
+  //  private double mOffset;
     private Timer mTimer;
     private List<DataReading> mDataReadings;
     private AtomicInteger mTicksSinceLastCellInfoUpdate;
     private AtomicBoolean mCellInfoRefresh;
 
+    @SuppressLint({"MissingInflatedId", "CutPasteId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,16 +72,16 @@ public class RecordActivity extends AppCompatActivity {
         mCurrentReading = new DataReading();
         mDataReadings = new ArrayList<>();
 
-        mOffset = getIntent().getDoubleExtra(NewRecordingActivity.OFFSET_KEY, 0.0);
+      //  mOffset = getIntent().getDoubleExtra(NewRecordingActivity.OFFSET_KEY, 0.0);
 
         mPauseRecordButton = findViewById(R.id.activity_record_pause_resume_button_ui);
         mRecordingImage = findViewById(R.id.activity_record_record_image_ui);
         mRecordingImageLabel = findViewById(R.id.activity_record_record_image_label_ui);
         mRsrpText = findViewById(R.id.activity_record_lte_rsrp_text_ui);
         mRsrqText = findViewById(R.id.activity_record_lte_rsrq_text_ui);
-        mPciText = findViewById(R.id.activity_record_lte_pci_text_ui);
+        mSinrText = findViewById(R.id.activity_record_lte_sinr_text_ui);
         mDataPointsText = findViewById(R.id.activity_record_data_points_text_ui);
-        mOffsetText = findViewById(R.id.activity_record_offset_text_ui);
+        mRssiText = findViewById(R.id.activity_record_lte_rssi_text_ui);
         mSignalStrengthText = findViewById(R.id.activity_record_signal_strength_text_ui);
 
         // Make part of text clickable.
@@ -125,6 +112,19 @@ public class RecordActivity extends AppCompatActivity {
         rsrqSpan.setSpan(clickableSpan, rsrqLabel.length() - 6, rsrqLabel.length(), 0);
         rsrqLabel.setMovementMethod(LinkMovementMethod.getInstance());
         rsrqLabel.setText(rsrqSpan);
+
+
+        TextView sinrLabel = findViewById(R.id.activity_record_lte_sinr_label_ui);
+        SpannableString sinrSpan = new SpannableString(getString(R.string.activity_record_lte_sinr_label_text));
+        sinrSpan.setSpan(clickableSpan, sinrLabel.length() - 6, sinrLabel.length(), 0);
+        sinrLabel.setMovementMethod(LinkMovementMethod.getInstance());
+        sinrLabel.setText(sinrSpan);
+
+        TextView rssiLabel = findViewById(R.id.activity_record_lte_rssi_text_ui);
+        SpannableString rssiSpan = new SpannableString(getString(R.string.activity_record_lte_rssi_label_text));
+        rssiSpan.setSpan(clickableSpan, rssiLabel.length()  , rssiLabel.length(), 0);
+        rssiLabel.setMovementMethod(LinkMovementMethod.getInstance());
+        rssiLabel.setText(rssiSpan);
 
         mRecordingImageAnimation = new AlphaAnimation(1, 0);
         mRecordingImageAnimation.setDuration(750);
@@ -172,7 +172,9 @@ public class RecordActivity extends AppCompatActivity {
                                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                                         dataReadingCopy.setRsrp(signalStrengthLte.getRsrp());
                                         dataReadingCopy.setRsrq(signalStrengthLte.getRsrq());
-                                        LteLog.i(TAG, "(VERSION >= 26) rsrp: " + signalStrengthLte.getRsrp() + ", rsrq: " + signalStrengthLte.getRsrq());
+                                        dataReadingCopy.setSinr(signalStrengthLte.getRssnr());
+                                        dataReadingCopy.setRssi(signalStrengthLte.getRssi());
+                                        LteLog.i(TAG, "(VERSION >= 26) rsrp: " + signalStrengthLte.getRsrp() + ", rsrq: " + signalStrengthLte.getRsrq() + ", sinr: " +signalStrengthLte.getRssnr() + " , rssi: " + signalStrengthLte.getRssi() );
                                     }
                                     else {
                                         dataReadingCopy.setRsrp(signalStrengthLte.getDbm()); // dbm = rsrp for values less than build 26.
@@ -182,11 +184,11 @@ public class RecordActivity extends AppCompatActivity {
                                     // Now get the pci.
                                     CellIdentityLte identityLte = cellInfoLte.getCellIdentity();
                                     if (identityLte != null) {
-                                        int pci = identityLte.getPci();
-                                        if (pci == DataReading.UNAVAILABLE) {
-                                            pci = -1;
+                                        int sinr = identityLte.getPci();
+                                        if (sinr == DataReading.UNAVAILABLE) {
+                                            sinr = -1;
                                         }
-                                        dataReadingCopy.setPci(pci);
+                                        dataReadingCopy.setSinr(sinr);
                                     }
                                 }
                             }
@@ -219,7 +221,7 @@ public class RecordActivity extends AppCompatActivity {
                     dataReadingCopy.setRsrp(DataReading.LOW_RSRP);
                 }
                 else {
-                    dataReadingCopy.setRsrp(dataReadingCopy.getRsrp() + (int) mOffset);
+                    dataReadingCopy.setRsrp(dataReadingCopy.getRsrp() );
                 }
 
                 // Adjust the rsrq.
@@ -250,9 +252,11 @@ public class RecordActivity extends AppCompatActivity {
                         }
                         mRsrpText.setText(String.format(Locale.getDefault(), "%d", dataReadingCopy.getRsrp()));
                         mRsrqText.setText(String.format(Locale.getDefault(), "%d", dataReadingCopy.getRsrq()));
-                        mPciText.setText(dataReadingCopy.getPci() == -1 ? "N/A" : String.format(Locale.getDefault(), "%d", dataReadingCopy.getPci()));
+
+                        mSinrText.setText(dataReadingCopy.getSinr() == -1 ? "N/A" : String.format(Locale.getDefault(), "%d", dataReadingCopy.getSinr()));
                         mDataPointsText.setText(String.format(Locale.getDefault(), "%d", numDataReadings));
-                        mOffsetText.setText(String.format(Locale.getDefault(), "%.1f", mOffset));
+                        mRssiText.setText(String.format(Locale.getDefault(), "%d", dataReadingCopy.getRssi()));
+                       // mOffsetText.setText(String.format(Locale.getDefault(), "%.1f", mOffset));
                     }
                 });
             }
@@ -312,7 +316,7 @@ public class RecordActivity extends AppCompatActivity {
     public void stopButtonClicked(View view) {
         Intent intent = new Intent(this, DisplayResultsActivity.class);
         intent.putExtra(DATA_READINGS_KEY, (ArrayList<DataReading>) mDataReadings);
-        intent.putExtra(OFFSET_KEY, mOffset);
+        //intent.putExtra(OFFSET_KEY, mOffset);
         startActivity(intent);
         finish();
     }
@@ -355,12 +359,14 @@ public class RecordActivity extends AppCompatActivity {
                     try {
                         int rsrp = Integer.parseInt(values[9]);
                         int rsrq = Integer.parseInt(values[10]);
+                        int rssi =Integer.parseInt(values[9]);
                         synchronized (MUTEX) {
                             mCurrentReading.setRsrp(rsrp);
                             mCurrentReading.setRsrq(rsrq);
-                            mCurrentReading.setPci(DataReading.PCI_NA);
+                            mCurrentReading.setRssi(rssi);
+                            mCurrentReading.setSinr(DataReading.PCI_NA);
                         }
-                        LteLog.i(TAG, String.format(Locale.getDefault(), "rsrp: %d, rsrq: %d", rsrp, rsrq));
+                        LteLog.i(TAG, String.format(Locale.getDefault(), "rsrp: %d, rsrq: %d, rssi : %d", rsrp, rsrq, rssi ));
                     }
                     catch (Exception caught) {
                         LteLog.i(TAG, "Caught an error parsing signal strength");
@@ -375,6 +381,8 @@ public class RecordActivity extends AppCompatActivity {
                             synchronized (MUTEX) {
                                 mCurrentReading.setRsrp(((CellSignalStrengthLte) cellSignalStrength).getRsrp());
                                 mCurrentReading.setRsrq(((CellSignalStrengthLte) cellSignalStrength).getRsrq());
+                               mCurrentReading.setSinr(((CellSignalStrengthLte) cellSignalStrength).getRssnr());
+                               mCurrentReading.setRssi(((CellSignalStrengthLte) cellSignalStrength).getRssi());
                             }
                         }
                     }
