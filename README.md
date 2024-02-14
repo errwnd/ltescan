@@ -1,4 +1,4 @@
-<img align="right" width="40" height="100" src="https://github.com/errwnd/ltescan/assets/37244926/a6a24da4-287b-4e90-b7fa-c1b4364a2f38">
+<img align="center" width="40" height="100" src="https://github.com/errwnd/ltescan/assets/37244926/a6a24da4-287b-4e90-b7fa-c1b4364a2f38">
 
 <img align="right" width="40" height="100" src="https://github.com/errwnd/ltescan/assets/37244926/5f2a7834-ccec-47cc-8f76-d1983d2c9d0f">
 
